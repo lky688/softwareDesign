@@ -2,3 +2,4 @@ student|student@gmail.com|student|StudentStudent
 admin|admin@gmail.com|admin|AdminAdmin
 tutor|tutor@gmail.com|tutor|TutorTutor
 adminB|admin2@gmail.com|admin|AdminAdmin
+abc|abc@gmail.com|admin|qwertyuI
