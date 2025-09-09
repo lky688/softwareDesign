@@ -1,14 +1,14 @@
 package registry.domain; 	
 
+import dataHandle.fileController;
 import java.util.ArrayList;
 import java.util.Scanner;
-import dataHandle.fileController;
 
 public class Tutor extends User{
 
 
 	public Tutor(String name, String email, String role, String password) {
-		super(name,email , role, password);
+		super(name, email , role, password);
 	}
 	
 	public Tutor() {
@@ -198,6 +198,7 @@ public class Tutor extends User{
 	    for (Session session : sessions) {
 	    	{
 	            found = true;
+				System.out.println();
 	            System.out.printf("Session ID: %d%n", session.getSessionID());
 	            System.out.printf("Course Name: %s%n", session.getCourseName());
 	            System.out.printf("Date: %s%n", session.getDate());
