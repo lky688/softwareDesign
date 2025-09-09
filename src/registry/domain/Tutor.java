@@ -15,6 +15,7 @@ public class Tutor extends User{
 		super();
 	}
 	
+	@Override
 	public void getInput() {
 	    Scanner scanner = new Scanner(System.in);
 

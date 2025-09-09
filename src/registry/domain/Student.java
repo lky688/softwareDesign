@@ -12,7 +12,7 @@ public class Student extends User{
 		super(name,email , role, password);
 	}
 	
-	
+	@Override
 	public void getInput() {
 	    Scanner scanner = new Scanner(System.in);
 
