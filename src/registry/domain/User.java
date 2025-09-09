@@ -14,7 +14,8 @@ public abstract class User {
 		this.role = role;
 	}
 	
-	public User() {};
+	//Empty default constructor
+	public User() {}
 	
 	// Abstract method to be implemented by subclasses
 	public abstract void getInput();
