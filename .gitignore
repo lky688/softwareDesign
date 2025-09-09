@@ -1,0 +1,17 @@
+# Ignore compiled class files
+/bin/
+/bin/**
+
+# Eclipse project files
+.settings/
+*.classpath
+*.project
+
+# Ignore text files if you don't want them tracked
+# TutorListedSession.txt
+# UserList.txt
+# BookedSessionList.txt
+
+# Optional: OS files
+.DS_Store
+Thumbs.db
