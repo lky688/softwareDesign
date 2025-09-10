@@ -53,4 +53,9 @@ public abstract class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	// Determine whether email and password match existing user
+	public boolean matchesCredentials(String email, String password) {
+		return this.email.equalsIgnoreCase(email) && this.password.equals(password);
+	}
 }
