@@ -5,3 +5,4 @@ adminB|admin2@gmail.com|admin|AdminAdmin
 abc|abc@gmail.com|admin|qwertyuI
 tutor2|tutor2@gmail.com|tutor|Asdfghjk
 er|abc1@gmail.com|student|Abc12345
+qwdwq wqdwq dw|abcd@gmail.com|student|Abc12345

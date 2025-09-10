@@ -198,6 +198,7 @@ public class fileController {
         }
     }
 
+	/*
 	    public static boolean deleteUserList(String targetAcc) {
 	        boolean found = false;
 	        ArrayList<User> users = getUserList();
@@ -220,15 +221,37 @@ public class fileController {
 
 	        return found;
 	    }
-      
-	
+		*/
+
+	public static boolean deleteUserList(String targetEmail) {
+        ArrayList<User> users = getUserList();
+		User userToBeDeleted = null;
+
+		for (User user: users) {
+	        if (user.getEmail().equalsIgnoreCase(targetEmail)) {
+				userToBeDeleted = user; // User to be deleted is found
+				break;
+	    	} 
+	    }
+
+        if (userToBeDeleted != null) {
+			users.remove(userToBeDeleted);
+            writeUsers(users);
+            System.out.println("The account has been successfully deleted.");
+			return true;
+        } else {
+            System.out.println("The email was not found, account has not been deleted.");
+			return false;
+        }
+    }
+    
+	/*
 	public static boolean addUserList(String newEmail, String newUsername, String newRole, String newPassword) {
 	    ArrayList<User> users = getUserList();
 
-	    for (User user : users) {
+	    for (User user: users) {
 	        if (user.getEmail().equalsIgnoreCase(newEmail)) {
-	            System.out.println("User with this email already exists: ");
-	            System.out.println("Please try with other email address");
+	            System.out.println("User with this email already exists. Please try another email address.");
 	            return false;
 	        }
 	    }
@@ -250,6 +273,29 @@ public class fileController {
 	    writeUsers(users);
 	    return true;
 	}
+	*/
+
+	public static boolean addUserList(String email, String name, String role, String password) {
+        ArrayList<User> users = getUserList();
+
+        for (User user: users) {
+	        if (user.getEmail().equalsIgnoreCase(email)) {
+	            System.out.println("User with this email already exists. Please try another email address.");
+	            return false;
+	        }
+	    }
+
+		String[] parts = {name, email, role, password};
+        User newUser = createUser(parts, role.trim().toLowerCase());
+        if (newUser == null) return false;
+
+        users.add(newUser);
+        writeUsers(users);
+        return true;
+    }
+	
+
+
 	
 	
 	public static ArrayList<Session> getListedSession() {
