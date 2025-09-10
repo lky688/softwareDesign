@@ -23,6 +23,7 @@ public class Student extends User {
 
 	        if (choice.equalsIgnoreCase("logout")) {
 	            System.out.println("Logging out...");
+				System.out.println("Logged out successfully.");
 	            break; // Exit the input loop and end the method
 	        }
 

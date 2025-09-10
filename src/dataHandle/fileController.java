@@ -1,6 +1,4 @@
 package dataHandle;
-import java.util.ArrayList;
-import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,12 +7,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import registry.domain.User;
 import registry.domain.Admin;
 import registry.domain.Session;
 import registry.domain.Student;
 import registry.domain.Tutor;
+import registry.domain.User;
 
 public class fileController {
 	public static ArrayList<User> getUserList() {
@@ -220,7 +220,7 @@ public class fileController {
 	    ArrayList<Session> sessions = getListedSession();
 	    boolean updated = false;
 
-	    for (Session session : sessions) {
+	    for (Session session: sessions) {
 	        if (Integer.toString(session.getSessionID()).equalsIgnoreCase(courseID)) {
 	            switch (updateField.toLowerCase()) {
 	                case "date":
@@ -247,7 +247,7 @@ public class fileController {
 	                    session.setVenue(newData);
 	                    updated = true;
 	                    break;
-	                case "courseName":
+	                case "coursename":
 	                    session.setCourseName(newData);
 	                    updated = true;
 	                    break;
@@ -260,7 +260,6 @@ public class fileController {
 
 	    if (updated) {
 	    	writeSessions(sessions);
-	        System.out.println("Session updated successfully.");
 	    } else {
 	        System.out.println("Session not found for course");
 	    }
@@ -290,7 +289,6 @@ public class fileController {
 	            }
 	        }
 	        writeSessions(newSessionsList);
-	        System.out.println("The session has been successfully deleted.");
 	    } else {
 	        System.out.println("The session ID was not found, session has not been deleted.");
 	    }
@@ -301,7 +299,7 @@ public class fileController {
 	
 	
 	public static void addSession(String courseName, String date, String startTime, int duration,
-	            int availablePerson, int maxPerson, String venue) {
+	    int availablePerson, int maxPerson, String venue) {
 		ArrayList<Session> sessions = getListedSession();
 		
 	    int newId = 0;
@@ -313,15 +311,9 @@ public class fileController {
 
 	    int newCourseId = newId + 1;
 		
-		
-
-		
-
 		sessions.add(new Session(newCourseId,courseName, date, startTime, duration, availablePerson, maxPerson, venue));
 		
-
 		writeSessions(sessions);
-		System.out.println("Session added successfully.");
 		}
 	
 	public static boolean addBookedList(User user, String courseID) {
@@ -412,8 +404,6 @@ public class fileController {
                         e.printStackTrace();
                     }
                 }
-
-                System.out.println("Your booking has been successfully cancelled");
                 return true;
             }
         }

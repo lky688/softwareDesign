@@ -3,3 +3,5 @@ admin|admin@gmail.com|admin|AdminAdmin
 tutor|tutor@gmail.com|tutor|TutorTutor
 adminB|admin2@gmail.com|admin|AdminAdmin
 abc|abc@gmail.com|admin|qwertyuI
+tutor2|tutor2@gmail.com|tutor|Asdfghjk
+qwe|qwe@gmail.com|student|Qwertyui

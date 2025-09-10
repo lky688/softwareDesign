@@ -1,6 +1,11 @@
 package registry.domain; 	
 
 import dataHandle.fileController;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,6 +31,7 @@ public class Tutor extends User{
 
 	        if (choice.equalsIgnoreCase("logout")) {
 	            System.out.println("Logging out...");
+				System.out.println("Logged out successfully.");
 	            break; // exit loop and method
 	        }
 
@@ -74,11 +80,9 @@ public class Tutor extends User{
 	    System.out.print("Enter course name: ");
 	    String courseName = scanner.nextLine();
 
-	    System.out.print("Enter date (YYYY-MM-DD, example: 2025-09-09): ");
-	    String date = scanner.nextLine();
+	    String date = getValidDate(scanner, "Enter date (DD-MM-YYYY, example: 17-06-2025): ");
 
-	    System.out.print("Enter start time (HH:mm, example: 14:00): ");
-	    String startTime = scanner.nextLine();
+	    String startTime = getValidTime(scanner, "Enter start time (HH:mm, example: 14:00): ");
 
 	    int duration = getValidIntegerInput(scanner, "Enter duration (minutes): ");
 
@@ -148,12 +152,14 @@ public class Tutor extends User{
             }
 
             String field = null;
-	        boolean isNumeric = false;
+			boolean isDate = false;
+			boolean isTime = false;
+			boolean isNumeric = false;
 
 	        switch (editChoice) {
 	            case 1: field = "courseName"; break;
-	            case 2: field = "date"; break;
-	            case 3: field = "startTime"; break;
+	            case 2: field = "date"; isDate = true; break;
+	            case 3: field = "startTime"; isTime = true; break;
 	            case 4: field = "duration"; isNumeric = true; break;
 	            case 5: field = "availablePerson"; isNumeric = true; break;
 	            case 6: field = "maxPerson"; isNumeric = true; break;
@@ -165,7 +171,11 @@ public class Tutor extends User{
 
             String newValue;
 
-			if (isNumeric) {
+			if (isDate) {
+	            newValue = getValidDate(scanner, "Enter new date (DD-MM-YYYY): ");
+	        } else if (isTime) {
+	            newValue = getValidTime(scanner, "Enter new start time (HH:mm): ");
+	        } else if (isNumeric) {
 	            int intValue = getValidIntegerInput(scanner, "Enter new integer value for " + field + ": ");
 	            newValue = Integer.toString(intValue);
 	        } else {
@@ -204,6 +214,34 @@ public class Tutor extends User{
             }
         }
     }
+
+	private String getValidDate(Scanner scanner, String prompt) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+		while (true) {
+			System.out.print(prompt);
+			String input = scanner.nextLine().trim();
+			try {
+				LocalDate.parse(input, formatter);
+				return input;
+			} catch (DateTimeParseException e) {
+				System.out.println("Invalid date format. Please use DD-MM-YYYY.");
+			}
+		}
+	}
+
+    private String getValidTime(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            try {
+                LocalTime.parse(input, DateTimeFormatter.ofPattern("HH:mm"));
+                return input;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid time format. Please use HH:mm.");
+            }
+        }
+    }
 	
 	public static boolean printAvailableSessions() {
 	    ArrayList<Session> sessions = fileController.getListedSession();
@@ -213,9 +251,9 @@ public class Tutor extends User{
             return false;
         }
 
-	    System.out.println("Available Sessions:");
+	    System.out.println("\nAvailable Sessions:");
+		System.out.println("----------------------------");
 	    for (Session session: sessions) {
-			System.out.println();
 	        System.out.printf("Session ID: %d%n", session.getSessionID());
 	        System.out.printf("Course Name: %s%n", session.getCourseName());
 	        System.out.printf("Date: %s%n", session.getDate());
