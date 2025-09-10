@@ -106,16 +106,9 @@ public class Tutor extends User{
 	        }
 
 	        ArrayList<Session> sessions = fileController.getListedSession();
-	        boolean found = false;
+	        boolean sessionFound = isSessionFound(sessions, sessionID);
 
-	        for (Session session: sessions) {
-	            if (Integer.toString(session.getSessionID()).equals(sessionID)) {
-	                found = true;
-	                break;
-	            }
-	        }
-
-	        if (found) {
+	        if (sessionFound) {
 	            fileController.deleteListedSession(sessionID);
 	            System.out.println("Session deleted successfully.");
 	            return; // exit delete loop
@@ -140,19 +133,11 @@ public class Tutor extends User{
             }
 
             ArrayList<Session> sessions = fileController.getListedSession();
-            boolean found = false;
-
-			for (Session session: sessions) {
-	            if (Integer.toString(session.getSessionID()).equals(sessionID)) {
-	                found = true;
-	                break;
-	            }
-	        }
-
-            if (!found) {
-                System.out.println("Session ID not found. Try again.");
-                continue;
-            }
+			boolean sessionFound = isSessionFound(sessions, sessionID);
+            if (!sessionFound) {
+				System.out.println("Session ID not found. Please try again.");
+				continue;
+			}
 
             printEditMenu();
             int editChoice = getValidIntegerInput(scanner, "Enter your choice (0-7): ");
@@ -197,6 +182,15 @@ public class Tutor extends User{
             return;
         }
     }
+
+	private boolean isSessionFound(ArrayList<Session> sessions, String sessionID) {
+		for (Session session: sessions) {
+	        if (Integer.toString(session.getSessionID()).equals(sessionID)) {
+                return true;
+	        }
+	    }
+		return false;
+	}
 
 	private int getValidIntegerInput(Scanner scanner, String prompt) {
         while (true) {
