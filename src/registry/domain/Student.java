@@ -34,7 +34,7 @@ public class Student extends User {
 	                handleCancellation(scanner);
 	                break;
 	            case "3":
-	                displayUserBookedSessions(this);
+	                displayUserBookedSessions();
 	                break;
 	            default:
 	                System.out.println("Invalid option, please try again.");
@@ -70,7 +70,7 @@ public class Student extends User {
     }
 
 	private void handleCancellation(Scanner scanner) {
-        displayUserBookedSessions(this);
+        displayUserBookedSessions();
         while (true) {
             System.out.print("Enter Course ID to cancel (or 'back' to return): ");
             String courseID = scanner.nextLine();
@@ -87,15 +87,16 @@ public class Student extends User {
         }
     }
 
-	public static void displayUserBookedSessions(User user) {
-	    List<String> bookedSessions = fileController.getUserBookedSessions(user);
+	public void displayUserBookedSessions() {
+	    List<String> bookedSessions = fileController.getUserBookedSessions(this);
 
 	    if (bookedSessions.isEmpty()) {
 	        System.out.println("You have no booked sessions.");
 	    } else {
-	        System.out.println("Your booked sessions (format: CourseName (Course ID) - Date - Duration - Venue):");
-	        System.out.println("--------------------------------------------------------------------------------");
-	        for (String sessionInfo : bookedSessions) {
+			System.out.println("Your booked sessions:");
+            System.out.println("CourseName (Course ID) - Date - Duration - Venue");
+            System.out.println("------------------------------------------------");
+	        for (String sessionInfo: bookedSessions) {
 	            System.out.println(sessionInfo);
 	        }
 	    }

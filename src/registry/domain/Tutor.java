@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Tutor extends User{
 
-
 	public Tutor(String name, String email, String role, String password) {
 		super(name, email , role, password);
 	}
@@ -20,12 +19,8 @@ public class Tutor extends User{
 	    Scanner scanner = new Scanner(System.in);
 
 	    while (true) {
-	        System.out.println("\n--- Menu ---");
-	        System.out.println("Enter 1 for Adding New Session");
-	        System.out.println("Enter 2 for Deleting Session");
-	        System.out.println("Enter 3 for Editing Session");
-	        System.out.println("Type 'logout' to exit");
-	        System.out.print("Your choice: ");
+			// Print the menu options
+			printMenu();
 
 	        String choice = scanner.nextLine().trim();
 
@@ -37,137 +32,16 @@ public class Tutor extends User{
 	        switch (choice) {
 	            case "1":
 	                // Add new session
-	                System.out.print("Enter course name: ");
-	                String courseName = scanner.nextLine();
-
-	                System.out.print("Enter date (e.g., 2025-09-09): ");
-	                String date = scanner.nextLine();
-
-	                System.out.print("Enter start time (e.g., 14:00): ");
-	                String startTime = scanner.nextLine();
-
-	                int duration = getValidIntegerInput(scanner, "Enter duration (in minutes): ");
-
-	                int maxPerson = getValidIntegerInput(scanner, "Enter maximum number of persons: ");
-
-	                System.out.print("Enter venue: ");
-	                String venue = scanner.nextLine();
-
-	                fileController.addSession(courseName, date, startTime, duration, 0, maxPerson, venue);
+					handleAddSession(scanner);
 	                break;
-
 	            case "2":
 	                // Delete session
-	                boolean skip = printAvailableSessions();
-	                while (true && skip) {
-	                    System.out.print("Please enter the session ID to delete (or type 'back' to cancel): ");
-	                    String targetSessionID = scanner.nextLine().trim();
-
-	                    if (targetSessionID.equalsIgnoreCase("back")) {
-	                        System.out.println("Cancelled session deletion. Returning to menu...");
-	                        break;
-	                    }
-
-	                    ArrayList<Session> sessions = fileController.getListedSession();
-	                    boolean found = false;
-
-	                    for (Session s : sessions) {
-	                        if (Integer.toString(s.getSessionID()).equals(targetSessionID)) {
-	                            found = true;
-	                            break;
-	                        }
-	                    }
-
-	                    if (found) {
-	                        fileController.deleteListedSession(targetSessionID);
-	                        System.out.println("Session deleted successfully.");
-	                        break; // exit delete loop
-	                    } else {
-	                        System.out.println("Session ID not found. Please try again or type 'back' to return.");
-	                    }
-	                }
+	                handleDeleteSession(scanner);
 	                break;
-
 	            case "3":
 	                // Edit session
-	                skip = printAvailableSessions();
-	                while (true && skip) {
-	                    System.out.print("Enter the session ID you want to edit (or type 'back' to cancel): ");
-	                    String sessionID = scanner.nextLine().trim();
-
-	                    if (sessionID.equalsIgnoreCase("back")) {
-	                        System.out.println("Returning to menu...");
-	                        break;
-	                    }
-
-	                    ArrayList<Session> sessions = fileController.getListedSession();
-	                    boolean found = false;
-
-	                    for (Session s : sessions) {
-	                        if (Integer.toString(s.getSessionID()).equals(sessionID)) {
-	                            found = true;
-	                            break;
-	                        }
-	                    }
-
-	                    if (!found) {
-	                        System.out.println("Session ID not found. Please try again.");
-	                        continue;
-	                    }
-
-	                    System.out.println("Which field would you like to update?");
-	                    System.out.println("1. Course Name");
-	                    System.out.println("2. Date");
-	                    System.out.println("3. Start Time");
-	                    System.out.println("4. Duration (in minutes)");
-	                    System.out.println("5. Available Person");
-	                    System.out.println("6. Max Person");
-	                    System.out.println("7. Venue");
-	                    System.out.println("0. Back to menu");
-
-	                    int editChoice = getValidIntegerInput(scanner, "Enter your choice (0-7): ");
-
-	                    if (editChoice == 0) {
-	                        System.out.println("Cancelled editing. Returning to menu...");
-	                        break;
-	                    }
-
-	                    String field = null;
-	                    boolean isNumeric = false;
-
-	                    switch (editChoice) {
-	                        case 1: field = "courseName"; break;
-	                        case 2: field = "date"; break;
-	                        case 3: field = "startTime"; break;
-	                        case 4: field = "duration"; isNumeric = true; break;
-	                        case 5: field = "availablePerson"; isNumeric = true; break;
-	                        case 6: field = "maxPerson"; isNumeric = true; break;
-	                        case 7: field = "venue"; break;
-	                        default:
-	                            System.out.println("Invalid choice. Please try again.");
-	                            continue;
-	                    }
-
-	                    String newValue;
-
-	                    if (isNumeric) {
-	                        int intValue = getValidIntegerInput(scanner, "Enter new integer value for " + field + ": ");
-	                        newValue = Integer.toString(intValue);
-	                    } else {
-	                        System.out.print("Enter new value for " + field + ": ");
-	                        newValue = scanner.nextLine().trim();
-	                    }
-
-	                    boolean result = fileController.updateSession(sessionID, field, newValue);
-	                    if (result) {
-	                        System.out.println("Session updated successfully.");
-	                        break; // exit edit loop after success
-	                    } else {
-	                        System.out.println("Failed to update session. Try again.");
-	                    }
-	                }
-	                break;
-
+	                handleEditSession(scanner);
+					break;
 	            default:
 	                System.out.println("Invalid option, please try again.");
 	                break;
@@ -175,47 +49,189 @@ public class Tutor extends User{
 	    }
 	}
 	
-	private static int getValidIntegerInput(Scanner scanner, String prompt) {
-        int number;
+	private void printMenu() {
+		System.out.println("\n--- Menu ---");
+		System.out.println("Enter 1 for Adding New Session");
+		System.out.println("Enter 2 for Deleting Session");
+		System.out.println("Enter 3 for Editing Session");
+		System.out.println("Type 'logout' to exit");
+		System.out.print("Your choice: ");
+	}
+
+	private void printEditMenu() {
+        System.out.println("Which field would you like to update?");
+        System.out.println("1. Course Name");
+        System.out.println("2. Date");
+        System.out.println("3. Start Time");
+        System.out.println("4. Duration (minutes)");
+        System.out.println("5. Available Person");
+        System.out.println("6. Max Person");
+        System.out.println("7. Venue");
+        System.out.println("0. Back to menu");
+    }
+
+	private void handleAddSession(Scanner scanner) {
+	    System.out.print("Enter course name: ");
+	    String courseName = scanner.nextLine();
+
+	    System.out.print("Enter date (YYYY-MM-DD, example: 2025-09-09): ");
+	    String date = scanner.nextLine();
+
+	    System.out.print("Enter start time (HH:mm, example: 14:00): ");
+	    String startTime = scanner.nextLine();
+
+	    int duration = getValidIntegerInput(scanner, "Enter duration (minutes): ");
+
+	    int maxPerson = getValidIntegerInput(scanner, "Enter maximum number of persons: ");
+
+	    System.out.print("Enter venue: ");
+	    String venue = scanner.nextLine();
+
+	    fileController.addSession(courseName, date, startTime, duration, 0, maxPerson, venue);
+		System.out.println("Session added successfully.");
+	}
+
+	private void handleDeleteSession(Scanner scanner) {
+		boolean isSessionAvailable = printAvailableSessions();
+
+		if (!isSessionAvailable) return;
+
+	    while (true) {
+	        System.out.print("Enter session ID to delete (or type 'back' to cancel): ");
+	        String sessionID = scanner.nextLine().trim();
+
+	        if (sessionID.equalsIgnoreCase("back")) {
+	            System.out.println("Cancelled session deletion. Returning to menu...");
+	            break;
+	        }
+
+	        ArrayList<Session> sessions = fileController.getListedSession();
+	        boolean found = false;
+
+	        for (Session session: sessions) {
+	            if (Integer.toString(session.getSessionID()).equals(sessionID)) {
+	                found = true;
+	                break;
+	            }
+	        }
+
+	        if (found) {
+	            fileController.deleteListedSession(sessionID);
+	            System.out.println("Session deleted successfully.");
+	            return; // exit delete loop
+	        } else {
+	            System.out.println("Session ID not found. Please try again.");
+	        }
+	    }
+	}
+
+	private void handleEditSession(Scanner scanner) {
+		boolean isSessionAvailable = printAvailableSessions();
+
+		if (!isSessionAvailable) return;
+
+        while (true) {
+            System.out.print("Enter session ID to edit (or type 'back' to cancel): ");
+            String sessionID = scanner.nextLine().trim();
+
+            if (sessionID.equalsIgnoreCase("back")) {
+                System.out.println("Returning to menu...");
+                return;
+            }
+
+            ArrayList<Session> sessions = fileController.getListedSession();
+            boolean found = false;
+
+			for (Session session: sessions) {
+	            if (Integer.toString(session.getSessionID()).equals(sessionID)) {
+	                found = true;
+	                break;
+	            }
+	        }
+
+            if (!found) {
+                System.out.println("Session ID not found. Try again.");
+                continue;
+            }
+
+            printEditMenu();
+            int editChoice = getValidIntegerInput(scanner, "Enter your choice (0-7): ");
+
+            if (editChoice == 0) {
+                System.out.println("Cancelled editing. Returning to menu...");
+                return;
+            }
+
+            String field = null;
+	        boolean isNumeric = false;
+
+	        switch (editChoice) {
+	            case 1: field = "courseName"; break;
+	            case 2: field = "date"; break;
+	            case 3: field = "startTime"; break;
+	            case 4: field = "duration"; isNumeric = true; break;
+	            case 5: field = "availablePerson"; isNumeric = true; break;
+	            case 6: field = "maxPerson"; isNumeric = true; break;
+	        	case 7: field = "venue"; break;
+	            default:
+	                System.out.println("Invalid choice. Please try again.");
+	                continue;
+	        }
+
+            String newValue;
+
+			if (isNumeric) {
+	            int intValue = getValidIntegerInput(scanner, "Enter new integer value for " + field + ": ");
+	            newValue = Integer.toString(intValue);
+	        } else {
+	            System.out.print("Enter new value for " + field + ": ");
+	            newValue = scanner.nextLine().trim();
+	        }
+
+            boolean result = fileController.updateSession(sessionID, field, newValue);
+            if (result) {
+	            System.out.println("Session updated successfully.");
+	        } else {
+	            System.out.println("Failed to update session. Try again.");
+	        }
+            return;
+        }
+    }
+
+	private int getValidIntegerInput(Scanner scanner, String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine();
             try {
-                number = Integer.parseInt(input);
-                break; 
+                int number = Integer.parseInt(input);
+                return number; 
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter an integer value.");
             }
         }
-        return number;
     }
 	
 	public static boolean printAvailableSessions() {
 	    ArrayList<Session> sessions = fileController.getListedSession();
 
-	    boolean found = false;
+		if (sessions.isEmpty()) {
+            System.out.println("No available sessions at the moment.");
+            return false;
+        }
+
 	    System.out.println("Available Sessions:");
-	    for (Session session : sessions) {
-	    	{
-	            found = true;
-				System.out.println();
-	            System.out.printf("Session ID: %d%n", session.getSessionID());
-	            System.out.printf("Course Name: %s%n", session.getCourseName());
-	            System.out.printf("Date: %s%n", session.getDate());
-	            System.out.printf("Start Time: %s%n", session.getStartTime());
-	            System.out.printf("Duration: %d minutes%n", session.getDuration());
-	            System.out.printf("Available Slots: %d/%d%n", session.getAvailablePerson(), session.getMaxPerson());
-	            System.out.printf("Venue: %s%n", session.getVenue());
-	            System.out.println("----------------------------");
-	        }
+	    for (Session session: sessions) {
+			System.out.println();
+	        System.out.printf("Session ID: %d%n", session.getSessionID());
+	        System.out.printf("Course Name: %s%n", session.getCourseName());
+	        System.out.printf("Date: %s%n", session.getDate());
+	        System.out.printf("Start Time: %s%n", session.getStartTime());
+	        System.out.printf("Duration: %d minutes%n", session.getDuration());
+	        System.out.printf("Available Slots: %d/%d%n", session.getAvailablePerson(), session.getMaxPerson());
+	        System.out.printf("Venue: %s%n", session.getVenue());
+	        System.out.println("----------------------------");
 	    }
 
-	    if (!found) {
-	        System.out.println("No available sessions at the moment.");   
-	        return false;
-	    }
 	    return true;
-	 
 	}
-	
 }
