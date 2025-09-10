@@ -4,4 +4,5 @@ tutor|tutor@gmail.com|tutor|TutorTutor
 adminB|admin2@gmail.com|admin|AdminAdmin
 abc|abc@gmail.com|admin|qwertyuI
 tutor2|tutor2@gmail.com|tutor|Asdfghjk
-qwe|qwe@gmail.com|student|Qwertyui
+er|abc1@gmail.com|student|Abc12345
+wefw|a@gmail.com|student|Jegjreigjierjigrhr

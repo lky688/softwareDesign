@@ -32,6 +32,7 @@ public class Session {
 		this.venue = venue;
 	}
 	
+	// Getters
 	public int getSessionID() {
 		return sessionID;
 	}
@@ -57,6 +58,7 @@ public class Session {
 		return venue;
 	}
 	
+	// Setters
 	public void setSessionID(int sessionID) {
 		this.sessionID = sessionID;
 	}
@@ -81,6 +83,5 @@ public class Session {
 	public void setVenue(String venue) {
 		this.venue = venue;
 	}
-	
-	
+
 }

@@ -169,7 +169,6 @@ public class fileController {
 		        break;
 	    }
 	    users.add(newUser);
-	    System.out.println("User added successfully.");
 	    writeUsers(users);
 	    return true;
 	}
