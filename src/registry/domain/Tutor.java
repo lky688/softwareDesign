@@ -54,6 +54,13 @@ public class Tutor extends User{
 					scanner.nextLine();
 					System.out.println("Returning to menu...\n");
 					break;
+				case "5":
+					Report report = new Report();
+					report.generateSessionsReport();
+					System.out.print("Enter any keys to return to menu: ");
+					scanner.nextLine();
+					System.out.println("Returning to menu...\n");
+					break;
 	            default:
 	                System.out.println("Invalid option, please try again.");
 	                break;
@@ -66,7 +73,8 @@ public class Tutor extends User{
 		System.out.println("Enter 1 for Adding New Session");
 		System.out.println("Enter 2 for Deleting Session");
 		System.out.println("Enter 3 for Editing Session");
-		System.out.println("Enter 4 for Viewing All Session");
+		System.out.println("Enter 4 for Viewing All Sessions Created");
+		System.out.println("Enter 5 for Generating Sessions Report");
 		System.out.println("Type 'logout' to exit");
 		System.out.print("\nYour choice: ");
 	}

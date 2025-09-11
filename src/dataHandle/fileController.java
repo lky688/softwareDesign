@@ -432,6 +432,36 @@ public class fileController {
         return bookedSessions;
     }
 
-}
+	public static ArrayList<User> getStudentsBySessionId(String sessionId) {
+		ArrayList<User> students = new ArrayList<>();
+		File file = new File(sessionId + ".txt");
 
-	
+		if (!file.exists()) {
+			return students; // no students joined yet
+		}
+
+		ArrayList<User> allUsers = getAllUsers();
+
+		try {
+			Scanner scanner = new Scanner(file);
+			while (scanner.hasNextLine()) {
+				String email = scanner.nextLine().trim();
+				if (!email.isEmpty()) {
+					// find the user object by email
+					for (User user: allUsers) {
+						if (user.getEmail().equalsIgnoreCase(email)) {
+							students.add(user);
+							break; // current student is found, break the loop to move to next student email
+						}
+					}
+				}
+			}
+			scanner.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return students;
+	}
+
+}
