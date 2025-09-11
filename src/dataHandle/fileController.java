@@ -19,8 +19,13 @@ import registry.domain.User;
 
 public class fileController {
 
-	private static final String USER_FILE_NAME = "UserList.txt";
-	private static final String SESSION_FILE_NAME = "TutorListedSession.txt";
+	private static final String USER_FILE_NAME = "users.txt";
+	private static final String SESSION_FILE_NAME = "sessions.txt";
+	private static final String BOOKED_SESSIONS_DIR = "bookedSessions";
+
+	/*
+	 * Users Related File Operations
+	 */
 
 	public static ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
@@ -151,9 +156,10 @@ public class fileController {
     }
 	
 
+	/*
+	 * Sessions Related File Operations
+	*/
 
-	
-	
 	public static ArrayList<Session> getAllSessions() {
 		ArrayList <Session> sessions = new ArrayList<>();
 
@@ -277,7 +283,8 @@ public class fileController {
 	}
 
 	private static void deleteBookedFile(String sessionId) {
-		File bookedFile = new File(sessionId + ".txt");
+		ensureBookedSessionsDirExists();
+    	File bookedFile = new File(BOOKED_SESSIONS_DIR, sessionId + ".txt");
 		if (bookedFile.exists()) {
 			if (bookedFile.delete()) {
 				System.out.println("Deleted booked student file: " + bookedFile.getName());
@@ -323,7 +330,8 @@ public class fileController {
 	}
 
 	private static boolean handleBooking(User user, String sessionId, Session session) {
-		File file = new File(sessionId + ".txt");
+		ensureBookedSessionsDirExists();
+    	File file = new File(BOOKED_SESSIONS_DIR, sessionId + ".txt");
 
 		// Check if user already booked this session
 		if (file.exists() && isUserAlreadyBooked(user, file)) {
@@ -371,7 +379,8 @@ public class fileController {
                     updateSession(sessionId, "occupiedcapacity", String.valueOf(newTotalBookedNum));
                 } 
 
-                File file = new File(sessionId + ".txt");
+                ensureBookedSessionsDirExists();
+    			File file = new File(BOOKED_SESSIONS_DIR, sessionId + ".txt");
                 if (file.exists()) {
                     try {
                         Scanner scanner = new Scanner(file);
@@ -405,7 +414,8 @@ public class fileController {
         ArrayList<Session> sessions = getAllSessions();
 
         for (Session session: sessions) {
-            File file = new File(session.getSessionID() + ".txt");
+            ensureBookedSessionsDirExists();
+    		File file = new File(BOOKED_SESSIONS_DIR, session.getSessionID() + ".txt");
             if (file.exists()) {
                 try {
                     Scanner scanner = new Scanner(file);
@@ -434,7 +444,8 @@ public class fileController {
 
 	public static ArrayList<User> getStudentsBySessionId(String sessionId) {
 		ArrayList<User> students = new ArrayList<>();
-		File file = new File(sessionId + ".txt");
+		ensureBookedSessionsDirExists();
+    	File file = new File(BOOKED_SESSIONS_DIR, sessionId + ".txt");
 
 		if (!file.exists()) {
 			return students; // no students joined yet
@@ -464,4 +475,10 @@ public class fileController {
 		return students;
 	}
 
+	private static void ensureBookedSessionsDirExists() {
+		File dir = new File(BOOKED_SESSIONS_DIR);
+		if (!dir.exists()) {
+			dir.mkdirs(); // creates the folder if not exist
+		}
+	}
 }
