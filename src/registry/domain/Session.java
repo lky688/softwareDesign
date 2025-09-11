@@ -6,28 +6,28 @@ public class Session {
 	private String date;
 	private String startTime;
 	private int duration;
-	private int availablePerson;
+	private int occupiedCapacity;
 	private int maxPerson;
 	private String venue;
 	
-	public Session(int sessionID,String courseName,String date,String startTime,int duration,int availablePerson,int maxPerson,String venue) {
+	public Session(int sessionID,String courseName,String date,String startTime,int duration,int occupiedCapacity,int maxPerson,String venue) {
 		this.sessionID = sessionID;
 		this.courseName = courseName;
 		this.date = date;
 		this.startTime = startTime;
 		this.duration = duration;
-		this.availablePerson = availablePerson;
+		this.occupiedCapacity = occupiedCapacity;
 		this.maxPerson = maxPerson;
 		this.venue = venue;
 	}
 	
-	public Session(String sessionID,String courseName,String date,String startTime,String duration,String availablePerson,String maxPerson,String venue) {
+	public Session(String sessionID,String courseName,String date,String startTime,String duration,String occupiedCapacity,String maxPerson,String venue) {
 		this.sessionID = Integer.parseInt(sessionID);
 		this.courseName = courseName;
 		this.date = date;
 		this.startTime = startTime;
 		this.duration = Integer.parseInt(duration);
-		this.availablePerson = Integer.parseInt(availablePerson);
+		this.occupiedCapacity = Integer.parseInt(occupiedCapacity);
 		this.maxPerson = Integer.parseInt(maxPerson);
 		this.venue = venue;
 	}
@@ -48,8 +48,8 @@ public class Session {
 	public int getDuration() {
 		return duration;
 	}
-	public int getAvailablePerson() {
-		return availablePerson;
+	public int getOccupiedCapacity() {
+		return occupiedCapacity;
 	}
 	public int getMaxPerson() {
 		return maxPerson;
@@ -74,8 +74,8 @@ public class Session {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-	public void setAvailablePerson(int availablePerson) {
-		this.availablePerson = availablePerson;
+	public void setOccupiedCapacity(int occupiedCapacity) {
+		this.occupiedCapacity = occupiedCapacity;
 	}
 	public void setMaxPerson(int maxPerson) {
 		this.maxPerson = maxPerson;

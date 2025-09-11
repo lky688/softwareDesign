@@ -197,7 +197,7 @@ public class fileController {
 		            session.getDate(),
 		            session.getStartTime(),
 		            session.getDuration(),
-		            session.getAvailablePerson(),
+		            session.getOccupiedCapacity(),
 		            session.getMaxPerson(),
 		            session.getVenue()
 		        );
@@ -237,8 +237,8 @@ public class fileController {
 			case "duration": 
 				session.setDuration(Integer.parseInt(newValue));
 				return true;
-			case "availableperson": 
-				session.setAvailablePerson(Integer.parseInt(newValue));
+			case "occupiedcapacity": 
+				session.setOccupiedCapacity(Integer.parseInt(newValue));
 				return true;
 			case "maxperson": 
 				session.setMaxPerson(Integer.parseInt(newValue));
@@ -288,7 +288,7 @@ public class fileController {
 	}
 	
 	public static void addSession(String courseName, String date, String startTime, int duration,
-	    int availablePerson, int maxPerson, String venue) {
+	    int occupiedCapacity, int maxPerson, String venue) {
 		ArrayList<Session> sessions = getAllSessions();
 		
 	    int newId = 0;
@@ -299,7 +299,7 @@ public class fileController {
 	    }
 	    int newCourseId = newId + 1;
 		
-		sessions.add(new Session(newCourseId,courseName, date, startTime, duration, availablePerson, maxPerson, venue));
+		sessions.add(new Session(newCourseId,courseName, date, startTime, duration, occupiedCapacity, maxPerson, venue));
 		saveSessionsToFile(sessions);
 	}
 	
@@ -309,7 +309,7 @@ public class fileController {
 	    for (Session session: sessions) {
 	        if (Integer.toString(session.getSessionID()).equalsIgnoreCase(sessionId)) {
 	            // Session found
-	            if (session.getAvailablePerson() < session.getMaxPerson()) {
+	            if (session.getOccupiedCapacity() < session.getMaxPerson()) {
 					return handleBooking(user, sessionId, session);
 	            } else {
 					System.out.println("The session has been fully occupied.");
@@ -345,8 +345,8 @@ public class fileController {
 			return false;
 		}
 
-		int newTotalBookedNum = session.getAvailablePerson() + 1;
-		return updateSession(sessionId, "availableperson", String.valueOf(newTotalBookedNum));
+		int newTotalBookedNum = session.getOccupiedCapacity() + 1;
+		return updateSession(sessionId, "occupiedcapacity", String.valueOf(newTotalBookedNum));
 	}
 
 	private static boolean isUserAlreadyBooked(User user, File file) {
@@ -366,9 +366,9 @@ public class fileController {
 
         for (Session session: sessions) {
             if (Integer.toString(session.getSessionID()).equalsIgnoreCase(sessionId)) {
-                if (session.getAvailablePerson() > 0) {
-                    int newTotalBookedNum = session.getAvailablePerson() - 1;
-                    updateSession(sessionId, "availableperson", String.valueOf(newTotalBookedNum));
+                if (session.getOccupiedCapacity() > 0) {
+                    int newTotalBookedNum = session.getOccupiedCapacity() - 1;
+                    updateSession(sessionId, "occupiedcapacity", String.valueOf(newTotalBookedNum));
                 } 
 
                 File file = new File(sessionId + ".txt");

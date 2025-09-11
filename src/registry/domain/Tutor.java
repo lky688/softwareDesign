@@ -1,7 +1,6 @@
 package registry.domain; 	
 
 import dataHandle.fileController;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -161,7 +160,7 @@ public class Tutor extends User{
 	            case 2: field = "date"; isDate = true; break;
 	            case 3: field = "startTime"; isTime = true; break;
 	            case 4: field = "duration"; isNumeric = true; break;
-	            case 5: field = "availablePerson"; isNumeric = true; break;
+	            case 5: field = "occupiedCapacity"; isNumeric = true; break;
 	            case 6: field = "maxPerson"; isNumeric = true; break;
 	        	case 7: field = "venue"; break;
 	            default:
@@ -259,7 +258,7 @@ public class Tutor extends User{
 	        System.out.printf("Date: %s%n", session.getDate());
 	        System.out.printf("Start Time: %s%n", session.getStartTime());
 	        System.out.printf("Duration: %d minutes%n", session.getDuration());
-	        System.out.printf("Available Slots: %d/%d%n", session.getAvailablePerson(), session.getMaxPerson());
+	        System.out.printf("Available Slots: %d/%d%n", session.getOccupiedCapacity(), session.getMaxPerson());
 	        System.out.printf("Venue: %s%n", session.getVenue());
 	        System.out.println("----------------------------");
 	    }
