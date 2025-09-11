@@ -69,9 +69,8 @@ public class Tutor extends User{
         System.out.println("2. Date");
         System.out.println("3. Start Time");
         System.out.println("4. Duration (minutes)");
-        System.out.println("5. Available Person");
-        System.out.println("6. Max Person");
-        System.out.println("7. Venue");
+        System.out.println("5. Max Person");
+        System.out.println("6. Venue");
         System.out.println("0. Back to menu");
     }
 
@@ -85,7 +84,7 @@ public class Tutor extends User{
 
 	    int duration = getValidIntegerInput(scanner, "Enter duration (minutes): ");
 
-	    int maxPerson = getValidIntegerInput(scanner, "Enter maximum number of persons: ");
+	    int maxPerson = getValidIntegerInput(scanner, "Enter maximum capacity of students: ");
 
 	    System.out.print("Enter venue: ");
 	    String venue = scanner.nextLine();
@@ -95,7 +94,7 @@ public class Tutor extends User{
 	}
 
 	private void handleDeleteSession(Scanner scanner) {
-		boolean isSessionAvailable = printAvailableSessions();
+		boolean isSessionAvailable = displayAllSessions();
 
 		if (!isSessionAvailable) return;
 
@@ -122,7 +121,7 @@ public class Tutor extends User{
 	}
 
 	private void handleEditSession(Scanner scanner) {
-		boolean isSessionAvailable = printAvailableSessions();
+		boolean isSessionAvailable = displayAllSessions();
 
 		if (!isSessionAvailable) return;
 
@@ -143,14 +142,14 @@ public class Tutor extends User{
 			}
 
             printEditMenu();
-            int editChoice = getValidIntegerInput(scanner, "Enter your choice (0-7): ");
+            int editChoice = getValidIntegerInput(scanner, "Enter your choice (0-6): ");
 
             if (editChoice == 0) {
                 System.out.println("Cancelled editing. Returning to menu...");
                 return;
             }
 
-            String field = null;
+            String field;
 			boolean isDate = false;
 			boolean isTime = false;
 			boolean isNumeric = false;
@@ -160,9 +159,8 @@ public class Tutor extends User{
 	            case 2: field = "date"; isDate = true; break;
 	            case 3: field = "startTime"; isTime = true; break;
 	            case 4: field = "duration"; isNumeric = true; break;
-	            case 5: field = "occupiedCapacity"; isNumeric = true; break;
-	            case 6: field = "maxPerson"; isNumeric = true; break;
-	        	case 7: field = "venue"; break;
+	            case 5: field = "maxPerson"; isNumeric = true; break;
+	        	case 6: field = "venue"; break;
 	            default:
 	                System.out.println("Invalid choice. Please try again.");
 	                continue;
@@ -242,7 +240,7 @@ public class Tutor extends User{
         }
     }
 	
-	public static boolean printAvailableSessions() {
+	public static boolean displayAllSessions() {
 	    ArrayList<Session> sessions = fileController.getAllSessions();
 
 		if (sessions.isEmpty()) {
@@ -258,7 +256,7 @@ public class Tutor extends User{
 	        System.out.printf("Date: %s%n", session.getDate());
 	        System.out.printf("Start Time: %s%n", session.getStartTime());
 	        System.out.printf("Duration: %d minutes%n", session.getDuration());
-	        System.out.printf("Available Slots: %d/%d%n", session.getOccupiedCapacity(), session.getMaxPerson());
+	        System.out.printf("Occupied Capacity: %d/%d%n", session.getOccupiedCapacity(), session.getMaxPerson());
 	        System.out.printf("Venue: %s%n", session.getVenue());
 	        System.out.println("----------------------------");
 	    }

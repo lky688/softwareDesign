@@ -53,7 +53,7 @@ public class Student extends User {
     }
 	
 	private void handleBooking(Scanner scanner) {
-        Tutor.printAvailableSessions();
+        Tutor.displayAllSessions();
         while (true) {
             System.out.print("Enter Course ID to book (or 'back' to return): ");
             String courseID = scanner.nextLine();
