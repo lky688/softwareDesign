@@ -47,6 +47,13 @@ public class Tutor extends User{
 	                // Edit session
 	                handleEditSession(scanner);
 					break;
+				case "4":
+					// View all session
+					displayAllSessions();
+					System.out.print("Enter any keys to return to menu: ");
+					scanner.nextLine();
+					System.out.println("Returning to menu...\n");
+					break;
 	            default:
 	                System.out.println("Invalid option, please try again.");
 	                break;
@@ -55,12 +62,13 @@ public class Tutor extends User{
 	}
 	
 	private void printMenu() {
-		System.out.println("\n--- Menu ---");
+		System.out.println("---------- Tutor Menu ----------");
 		System.out.println("Enter 1 for Adding New Session");
 		System.out.println("Enter 2 for Deleting Session");
 		System.out.println("Enter 3 for Editing Session");
+		System.out.println("Enter 4 for Viewing All Session");
 		System.out.println("Type 'logout' to exit");
-		System.out.print("Your choice: ");
+		System.out.print("\nYour choice: ");
 	}
 
 	private void printEditMenu() {
@@ -103,7 +111,7 @@ public class Tutor extends User{
 	        String sessionID = scanner.nextLine().trim();
 
 	        if (sessionID.equalsIgnoreCase("back")) {
-	            System.out.println("Cancelled session deletion. Returning to menu...");
+	            System.out.println("Cancelled session deletion. Returning to menu...\n");
 	            break;
 	        }
 
@@ -130,7 +138,7 @@ public class Tutor extends User{
             String sessionID = scanner.nextLine().trim();
 
             if (sessionID.equalsIgnoreCase("back")) {
-                System.out.println("Returning to menu...");
+                System.out.println("Returning to menu...\n");
                 return;
             }
 
@@ -145,7 +153,7 @@ public class Tutor extends User{
             int editChoice = getValidIntegerInput(scanner, "Enter your choice (0-6): ");
 
             if (editChoice == 0) {
-                System.out.println("Cancelled editing. Returning to menu...");
+                System.out.println("Cancelled editing. Returning to menu...\n");
                 return;
             }
 
@@ -244,7 +252,7 @@ public class Tutor extends User{
 	    ArrayList<Session> sessions = fileController.getAllSessions();
 
 		if (sessions.isEmpty()) {
-            System.out.println("No available sessions at the moment.");
+            System.out.println("\nNo available sessions at the moment.");
             return false;
         }
 
@@ -260,6 +268,7 @@ public class Tutor extends User{
 	        System.out.printf("Venue: %s%n", session.getVenue());
 	        System.out.println("----------------------------");
 	    }
+		System.out.println();
 
 	    return true;
 	}

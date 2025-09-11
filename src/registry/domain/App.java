@@ -9,8 +9,8 @@ public class App {
         ArrayList<User> users = fileController.getAllUsers();
         User matchedUser = login(users);
 
-        System.out.println("Login successful!");
-        System.out.println("Welcome, " + matchedUser.getName());
+        System.out.println("\nLogin successful!");
+        System.out.println("Welcome, " + matchedUser.getName() + ".\n");
         
         matchedUser.getInput();
     }

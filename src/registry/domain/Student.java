@@ -36,6 +36,9 @@ public class Student extends User {
 	                break;
 	            case "3":
 	                displayUserBookedSessions();
+					System.out.print("Enter any keys to return to menu: ");
+					scanner.nextLine();
+					System.out.println("Returning to menu...\n");
 	                break;
 	            default:
 	                System.out.println("Invalid option, please try again.");
@@ -44,12 +47,12 @@ public class Student extends User {
 	}
 
 	private void printMenu() {
-        System.out.println("\n--- Menu ---");
+        System.out.println("---------- Student Menu ----------");
         System.out.println("Enter 1 for Booking New Session");
         System.out.println("Enter 2 for Cancel Booked Session");
         System.out.println("Enter 3 for Viewing Booked Session");
         System.out.println("Type 'logout' to exit");
-        System.out.print("Your choice: ");
+        System.out.print("\nYour choice: ");
     }
 	
 	private void handleBooking(Scanner scanner) {
@@ -92,15 +95,17 @@ public class Student extends User {
 	    List<String> bookedSessions = fileController.getBookedSessionsForUser(this);
 
 	    if (bookedSessions.isEmpty()) {
-	        System.out.println("You have no booked sessions.");
+	        System.out.println("\nYou have no booked sessions.");
 	    } else {
 			System.out.println("Your booked sessions:");
+			System.out.println("--------------------------------------------------------------------");
             System.out.println("CourseName (Course ID) - Date - Duration - Venue");
-            System.out.println("------------------------------------------------");
+            System.out.println("--------------------------------------------------------------------");
 	        for (String sessionInfo: bookedSessions) {
 	            System.out.println(sessionInfo);
 	        }
 	    }
+		System.out.println();
 	}
 }
 

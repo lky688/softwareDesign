@@ -15,11 +15,14 @@ public class Admin extends User {
 	};
 
 	public static void printMenu() {
-		System.out.println("Enter 1 for Adding New User(Student/Tutor/Admin)");
-		System.out.println("Enter 2 for Delete Existing User(Student/Tutor/Admin)");
-		System.out.println("Enter 3 for Edit Existing User(Student/Tutor/Admin)\n");
+		System.out.println("---------- Admin Menu ----------");
+		System.out.println("Enter 1 to Add New User (Student/Tutor/Admin)");
+		System.out.println("Enter 2 to Delete Existing User (Student/Tutor/Admin)");
+		System.out.println("Enter 3 to Edit Existing User (Student/Tutor/Admin)");
+		System.out.println("Enter 4 to View Created Sessions");
+		System.out.println("Enter 5 to View All Users");
 		System.out.println("Type 'logout' to exit");
-		System.out.print("Your choice:");
+		System.out.print("\nYour choice:");
 	}
 	
 	@Override
@@ -43,6 +46,19 @@ public class Admin extends User {
 					handleDeleteUser(scanner); break;
 				case "3":
 					handleEditUser(scanner); break;
+				case "4":
+					Tutor.displayAllSessions();
+					System.out.print("Enter any keys to return to menu: ");
+					scanner.nextLine();
+					System.out.println("Returning to menu...\n");
+					break;
+				case "5":
+					ArrayList<User> users = fileController.getAllUsers();
+					printUserList(users);
+					System.out.print("Enter any keys to return to menu: ");
+					scanner.nextLine();
+					System.out.println("Returning to menu...\n");
+					break;
 				default:
 					System.out.println("Unknown input, please try again.");
 			}
@@ -154,7 +170,6 @@ public class Admin extends User {
 
 	private void updateUserDetails(String email, Scanner scanner) {
         while (true) {
-            System.out.println("-----------------------------------------");
             System.out.println("Select a field to update:");
             System.out.println("1. Username");
             System.out.println("2. Role");
@@ -239,7 +254,7 @@ public class Admin extends User {
 	}
 
 	private void printUserList(ArrayList<User> users) {
-        System.out.println("List of users:");
+        System.out.println("\nList of users:");
         System.out.println("-------------------------------------------------------------------");
         System.out.printf("%-20s %-15s %-25s\n", "Username", "Role", "Email");
         System.out.println("-------------------------------------------------------------------");
@@ -247,18 +262,20 @@ public class Admin extends User {
             System.out.printf("%-20s %-15s %-25s\n",
                     user.getName(), user.getRole(), user.getEmail());
         }
-        System.out.println("-------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------\n");
     }
 
 	private void printSingleUser(String email, ArrayList<User> users) {
+		System.out.println("\n------------------------------------------------------------------------");
         for (User user : users) {
             if (user.getEmail().equals(email)) {
                 System.out.printf("%-20s %-15s %-25s %-15s\n", "Username", "Role", "Email", "Password");
-                System.out.println("-------------------------------------------------------------------");
+                System.out.println("------------------------------------------------------------------------");
                 System.out.printf("%-20s %-15s %-25s %-15s\n",
                         user.getName(), user.getRole(), user.getEmail(), user.getPassword());
             }
         }
+		System.out.println("------------------------------------------------------------------------\n");
     }
 	
 	// Email: basic format check

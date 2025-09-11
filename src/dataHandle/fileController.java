@@ -237,6 +237,9 @@ public class fileController {
 			case "duration": 
 				session.setDuration(Integer.parseInt(newValue));
 				return true;
+			case "occupiedcapacity": 
+				session.setOccupiedCapacity(Integer.parseInt(newValue));
+				return true;
 			case "maxperson": 
 				session.setMaxPerson(Integer.parseInt(newValue));
 				return true;
