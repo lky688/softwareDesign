@@ -109,11 +109,11 @@ public class Tutor extends User{
 	            break;
 	        }
 
-	        ArrayList<Session> sessions = fileController.getListedSession();
+	        ArrayList<Session> sessions = fileController.getAllSessions();
 	        boolean sessionFound = isSessionFound(sessions, sessionID);
 
 	        if (sessionFound) {
-	            fileController.deleteListedSession(sessionID);
+	            fileController.deleteSessionById(sessionID);
 	            System.out.println("Session deleted successfully.");
 	            return; // exit delete loop
 	        } else {
@@ -136,7 +136,7 @@ public class Tutor extends User{
                 return;
             }
 
-            ArrayList<Session> sessions = fileController.getListedSession();
+            ArrayList<Session> sessions = fileController.getAllSessions();
 			boolean sessionFound = isSessionFound(sessions, sessionID);
             if (!sessionFound) {
 				System.out.println("Session ID not found. Please try again.");
@@ -244,7 +244,7 @@ public class Tutor extends User{
     }
 	
 	public static boolean printAvailableSessions() {
-	    ArrayList<Session> sessions = fileController.getListedSession();
+	    ArrayList<Session> sessions = fileController.getAllSessions();
 
 		if (sessions.isEmpty()) {
             System.out.println("No available sessions at the moment.");

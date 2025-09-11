@@ -22,7 +22,7 @@ public class fileController {
 	private static final String USER_FILE_NAME = "UserList.txt";
 	private static final String SESSION_FILE_NAME = "TutorListedSession.txt";
 
-	public static ArrayList<User> getUserList() {
+	public static ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
 
         try (Scanner fileInput = new Scanner(new File(USER_FILE_NAME))) {
@@ -60,7 +60,7 @@ public class fileController {
         }
     }
 
-	public static void writeUsers(ArrayList<User> users) {
+	public static void saveUsersToFile(ArrayList<User> users) {
 	    try (PrintWriter writer = new PrintWriter(USER_FILE_NAME)) {
 	        for (User user: users) {
 	            String line = user.getName() + "|" +
@@ -76,7 +76,7 @@ public class fileController {
 	}
 		
 	public static boolean updateUser(String targetEmail, String field, String newValue) {
-        ArrayList<User> users = getUserList();
+        ArrayList<User> users = getAllUsers();
         boolean updated = false;
 
         for (User user : users) {
@@ -87,7 +87,7 @@ public class fileController {
         }
 
         if (updated) {
-            writeUsers(users);
+            saveUsersToFile(users);
             System.out.println("User updated successfully.");
             return true;
         } else {
@@ -109,8 +109,8 @@ public class fileController {
     }
 
 
-	public static boolean deleteUserList(String targetEmail) {
-        ArrayList<User> users = getUserList();
+	public static boolean deleteUserByEmail(String targetEmail) {
+        ArrayList<User> users = getAllUsers();
 		User userToBeDeleted = null;
 
 		for (User user: users) {
@@ -122,7 +122,7 @@ public class fileController {
 
         if (userToBeDeleted != null) {
 			users.remove(userToBeDeleted);
-            writeUsers(users);
+            saveUsersToFile(users);
             System.out.println("The account has been successfully deleted.");
 			return true;
         } else {
@@ -131,8 +131,8 @@ public class fileController {
         }
     }
 
-	public static boolean addUserList(String email, String name, String role, String password) {
-        ArrayList<User> users = getUserList();
+	public static boolean addUser(String email, String name, String role, String password) {
+        ArrayList<User> users = getAllUsers();
 
         for (User user: users) {
 	        if (user.getEmail().equalsIgnoreCase(email)) {
@@ -146,7 +146,7 @@ public class fileController {
         if (newUser == null) return false;
 
         users.add(newUser);
-        writeUsers(users);
+        saveUsersToFile(users);
         return true;
     }
 	
@@ -154,7 +154,7 @@ public class fileController {
 
 	
 	
-	public static ArrayList<Session> getListedSession() {
+	public static ArrayList<Session> getAllSessions() {
 		ArrayList <Session> sessions = new ArrayList<>();
 
 		try (Scanner scanner = new Scanner(new File(SESSION_FILE_NAME))) {
@@ -188,7 +188,7 @@ public class fileController {
 		);
 	}
 
-	public static void writeSessions(ArrayList<Session> sessions) {
+	public static void saveSessionsToFile(ArrayList<Session> sessions) {
 		try (PrintWriter writer = new PrintWriter(SESSION_FILE_NAME)) {
 		    for (Session session: sessions) {
 		        writer.printf("%d|%s|%s|%s|%d|%d|%d|%s%n",
@@ -208,7 +208,7 @@ public class fileController {
     }
 
 	public static boolean updateSession(String sessionId, String updateField, String newData) {
-	    ArrayList<Session> sessions = getListedSession();
+	    ArrayList<Session> sessions = getAllSessions();
 	    boolean updated = false;
 
 	    for (Session session: sessions) {
@@ -219,7 +219,7 @@ public class fileController {
 	    }
 
 	    if (updated) {
-	    	writeSessions(sessions);
+	    	saveSessionsToFile(sessions);
 	    } else {
 	        System.out.println("Session not found for ID: " + sessionId);
 	    }
@@ -255,20 +255,20 @@ public class fileController {
 		}
 	}
 	
-	public static boolean deleteListedSession(String targetListedSession) {
-	    ArrayList<Session> sessions = getListedSession();
+	public static boolean deleteSessionById(String sessionId) {
+	    ArrayList<Session> sessions = getAllSessions();
 		Session sessionToBeDeleted = null;
 
 	    for (Session session : sessions) {
-	        if (Integer.toString(session.getSessionID()).equalsIgnoreCase(targetListedSession)) {
+	        if (Integer.toString(session.getSessionID()).equalsIgnoreCase(sessionId)) {
 				sessionToBeDeleted = session;
 	        }
 	    }
 
 	    if (sessionToBeDeleted != null) {
 			sessions.remove(sessionToBeDeleted);
-	    	deleteBookedFile(targetListedSession);
-	        writeSessions(sessions);
+	    	deleteBookedFile(sessionId);
+	        saveSessionsToFile(sessions);
 			return true;
 	    } else {
 	        System.out.println("Session ID not found, session not deleted.");
@@ -289,7 +289,7 @@ public class fileController {
 	
 	public static void addSession(String courseName, String date, String startTime, int duration,
 	    int availablePerson, int maxPerson, String venue) {
-		ArrayList<Session> sessions = getListedSession();
+		ArrayList<Session> sessions = getAllSessions();
 		
 	    int newId = 0;
 	    for (Session session : sessions) {
@@ -300,11 +300,11 @@ public class fileController {
 	    int newCourseId = newId + 1;
 		
 		sessions.add(new Session(newCourseId,courseName, date, startTime, duration, availablePerson, maxPerson, venue));
-		writeSessions(sessions);
+		saveSessionsToFile(sessions);
 	}
 	
 	public static boolean addBookedList(User user, String sessionId) {
-	    ArrayList<Session> sessions = getListedSession();
+	    ArrayList<Session> sessions = getAllSessions();
 
 	    for (Session session: sessions) {
 	        if (Integer.toString(session.getSessionID()).equalsIgnoreCase(sessionId)) {
@@ -362,7 +362,7 @@ public class fileController {
 	}
 
     public static boolean deleteBookedSession(User user, String sessionId) {
-        ArrayList<Session> sessions = getListedSession();
+        ArrayList<Session> sessions = getAllSessions();
 
         for (Session session: sessions) {
             if (Integer.toString(session.getSessionID()).equalsIgnoreCase(sessionId)) {
@@ -400,9 +400,9 @@ public class fileController {
         return false;
     }
     
-    public static List<String> getUserBookedSessions(User user) {
+    public static List<String> getBookedSessionsForUser(User user) {
         List<String> bookedSessions = new ArrayList<>();
-        ArrayList<Session> sessions = getListedSession();
+        ArrayList<Session> sessions = getAllSessions();
 
         for (Session session: sessions) {
             File file = new File(session.getSessionID() + ".txt");

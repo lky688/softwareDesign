@@ -6,7 +6,7 @@ import java.util.*;
 public class App {
 	
 	public static void main(String[] args) {
-        ArrayList<User> users = fileController.getUserList();
+        ArrayList<User> users = fileController.getAllUsers();
         User matchedUser = login(users);
 
         System.out.println("Login successful!");

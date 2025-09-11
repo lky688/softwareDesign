@@ -89,7 +89,7 @@ public class Student extends User {
     }
 
 	public void displayUserBookedSessions() {
-	    List<String> bookedSessions = fileController.getUserBookedSessions(this);
+	    List<String> bookedSessions = fileController.getBookedSessionsForUser(this);
 
 	    if (bookedSessions.isEmpty()) {
 	        System.out.println("You have no booked sessions.");

@@ -87,12 +87,12 @@ public class Admin extends User {
 			}
 		} while (!checkValidPassword(password));
 
-		fileController.addUserList(email, name, role, password);
+		fileController.addUser(email, name, role, password);
 		System.out.println("User added successfully.");
 	}
 
 	private void handleDeleteUser(Scanner scanner) {
-        ArrayList<User> users = fileController.getUserList();
+        ArrayList<User> users = fileController.getAllUsers();
         if (users.isEmpty()) {
             System.out.println("No users available.");
             return;
@@ -118,12 +118,12 @@ public class Admin extends User {
             break;
         }
 
-        fileController.deleteUserList(email);
+        fileController.deleteUserByEmail(email);
         System.out.println("Successfully deleted.");
     }
 
 	private void handleEditUser(Scanner scanner) {
-        ArrayList<User> users = fileController.getUserList();
+        ArrayList<User> users = fileController.getAllUsers();
         if (users.isEmpty()) {
             System.out.println("No users available.");
             return;
@@ -272,7 +272,7 @@ public class Admin extends User {
     }
 	
 	public static boolean isEmailExist(String email, String type) {
-	    ArrayList<User> users = fileController.getUserList();  
+	    ArrayList<User> users = fileController.getAllUsers();  
 	    for (User user: users) {
 	        if (user.getEmail().equalsIgnoreCase(email)) {
 	        	if(type.equals("add")) {
