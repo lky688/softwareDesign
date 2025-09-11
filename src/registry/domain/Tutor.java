@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Tutor extends User{
+public class Tutor extends User {
 
 	public Tutor(String name, String email, String role, String password) {
 		super(name, email , role, password);
@@ -55,7 +55,7 @@ public class Tutor extends User{
 					System.out.println("Returning to menu...\n");
 					break;
 				case "5":
-					Report report = new Report();
+					Report report = new Report(this);
 					report.generateSessionsReport();
 					System.out.print("Enter any keys to return to menu: ");
 					scanner.nextLine();
