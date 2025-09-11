@@ -24,7 +24,6 @@ public class Admin extends User {
 	
 	@Override
 	public void getInput() {
-	    String email, name, role, password;
 	    String choice;
 	    Scanner scanner = new Scanner(System.in);
 
@@ -39,11 +38,11 @@ public class Admin extends User {
 
 			switch (choice) {
 				case "1":
-					addUser(scanner); break;
+					handleAddUser(scanner); break;
 				case "2":
-					deleteUser(scanner); break;
+					handleDeleteUser(scanner); break;
 				case "3":
-					editUser(scanner); break;
+					handleEditUser(scanner); break;
 				default:
 					System.out.println("Unknown input, please try again.");
 			}
@@ -51,7 +50,7 @@ public class Admin extends User {
 	    } while (!choice.equalsIgnoreCase("logout")); // repeat menu until logout
 	}
 	
-	public void addUser(Scanner scanner) {
+	public void handleAddUser(Scanner scanner) {
 		String email, name, role, password;
 
 		// Get valid email
@@ -92,7 +91,7 @@ public class Admin extends User {
 		System.out.println("User added successfully.");
 	}
 
-	private void deleteUser(Scanner scanner) {
+	private void handleDeleteUser(Scanner scanner) {
         ArrayList<User> users = fileController.getUserList();
         if (users.isEmpty()) {
             System.out.println("No users available.");
@@ -123,7 +122,7 @@ public class Admin extends User {
         System.out.println("Successfully deleted.");
     }
 
-	private void editUser(Scanner scanner) {
+	private void handleEditUser(Scanner scanner) {
         ArrayList<User> users = fileController.getUserList();
         if (users.isEmpty()) {
             System.out.println("No users available.");
