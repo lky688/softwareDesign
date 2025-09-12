@@ -1,4 +1,4 @@
-package registry.domain;
+package tutoring.domain;
 
 public class Session {
 	private int sessionID;

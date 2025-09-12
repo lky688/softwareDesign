@@ -1,6 +1,7 @@
-package registry.domain;
+package tutoring.domain;
 
-import dataHandle.fileController;
+import tutoring.controller.BookingFileHandler;
+import tutoring.controller.SessionFileHandler;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Report {
     private User generatedBy;
 
     public Report(User generatedBy) {
-        this.sessions = fileController.getAllSessions();
+        this.sessions = SessionFileHandler.getAllSessions();
         this.generatedAt = LocalDateTime.now();
         this.generatedBy = generatedBy;
     }
@@ -38,7 +39,7 @@ public class Report {
             System.out.printf("Venue: %s%n", session.getVenue());
             System.out.printf("Number of Booked Students: %d%n%n", session.getOccupiedCapacity());
             
-            ArrayList<User> students = fileController.getStudentsBySessionId(Integer.toString(session.getSessionID()));
+            ArrayList<User> students = BookingFileHandler.getStudentsBySessionId(Integer.toString(session.getSessionID()));
 
             System.out.println("List of Booked Students: ");
             if (students.isEmpty()) {

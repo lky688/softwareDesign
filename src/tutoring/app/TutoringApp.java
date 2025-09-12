@@ -1,12 +1,15 @@
-package registry.domain;
+package tutoring.app;
 
-import dataHandle.fileController;
-import java.util.*;
+import tutoring.controller.UserFileHandler;
+import tutoring.domain.User;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-public class App {
+public class TutoringApp {
 	
 	public static void main(String[] args) {
-        ArrayList<User> users = fileController.getAllUsers();
+        ArrayList<User> users = UserFileHandler.getAllUsers();
         User matchedUser = login(users);
 
         System.out.println("\nLogin successful!");

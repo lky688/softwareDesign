@@ -1,4 +1,4 @@
-package registry.domain;
+package tutoring.domain;
 
 public abstract class User {
 	

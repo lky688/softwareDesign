@@ -1,6 +1,6 @@
-package registry.domain; 	
+package tutoring.domain; 	
 
-import dataHandle.fileController;
+import tutoring.controller.SessionFileHandler;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -105,7 +105,7 @@ public class Tutor extends User {
 	    System.out.print("Enter venue: ");
 	    String venue = scanner.nextLine();
 
-	    fileController.addSession(courseName, date, startTime, duration, 0, maxPerson, venue);
+	    SessionFileHandler.addSession(courseName, date, startTime, duration, 0, maxPerson, venue);
 		System.out.println("Session added successfully.");
 	}
 
@@ -123,11 +123,11 @@ public class Tutor extends User {
 	            break;
 	        }
 
-	        ArrayList<Session> sessions = fileController.getAllSessions();
+	        ArrayList<Session> sessions = SessionFileHandler.getAllSessions();
 	        boolean sessionFound = isSessionFound(sessions, sessionID);
 
 	        if (sessionFound) {
-	            fileController.deleteSessionById(sessionID);
+	            SessionFileHandler.deleteSessionById(sessionID);
 	            System.out.println("Session deleted successfully.");
 	            return; // exit delete loop
 	        } else {
@@ -150,7 +150,7 @@ public class Tutor extends User {
                 return;
             }
 
-            ArrayList<Session> sessions = fileController.getAllSessions();
+            ArrayList<Session> sessions = SessionFileHandler.getAllSessions();
 			boolean sessionFound = isSessionFound(sessions, sessionID);
             if (!sessionFound) {
 				System.out.println("Session ID not found. Please try again.");
@@ -196,7 +196,7 @@ public class Tutor extends User {
 	            newValue = scanner.nextLine().trim();
 	        }
 
-            boolean result = fileController.updateSession(sessionID, field, newValue);
+            boolean result = SessionFileHandler.updateSession(sessionID, field, newValue);
             if (result) {
 	            System.out.println("Session updated successfully.");
 	        } else {
@@ -257,7 +257,7 @@ public class Tutor extends User {
     }
 	
 	public static boolean displayAllSessions() {
-	    ArrayList<Session> sessions = fileController.getAllSessions();
+	    ArrayList<Session> sessions = SessionFileHandler.getAllSessions();
 
 		if (sessions.isEmpty()) {
             System.out.println("\nNo available sessions at the moment.");

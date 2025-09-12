@@ -1,6 +1,7 @@
-package registry.domain;
+package tutoring.domain;
 
-import dataHandle.fileController;
+import tutoring.controller.BookingFileHandler;
+import tutoring.controller.SessionFileHandler;
 import java.util.List;
 import java.util.Scanner;
 
@@ -63,7 +64,7 @@ public class Student extends User {
 			
             if (courseID.equalsIgnoreCase("back")) return;
 
-			boolean success = fileController.addBookedList(this, courseID);
+			boolean success = SessionFileHandler.addBookedList(this, courseID);
             if (success) {
                 System.out.println("Session booked successfully for: " + this.getEmail());
                 return;
@@ -81,7 +82,7 @@ public class Student extends User {
 
             if (courseID.equalsIgnoreCase("back")) return;
 
-			boolean success = fileController.deleteBookedSession(this, courseID);
+			boolean success = BookingFileHandler.deleteBookedSession(this, courseID);
             if (success) {
                 System.out.println("Booking cancelled for: " + this.getEmail());
                 return;
@@ -92,7 +93,7 @@ public class Student extends User {
     }
 
 	public void displayUserBookedSessions() {
-	    List<String> bookedSessions = fileController.getBookedSessionsForUser(this);
+	    List<String> bookedSessions = BookingFileHandler.getBookedSessionsForUser(this);
 
 	    if (bookedSessions.isEmpty()) {
 	        System.out.println("\nYou have no booked sessions.");

@@ -1,6 +1,6 @@
-package registry.domain;
+package tutoring.domain;
 
-import dataHandle.fileController;
+import tutoring.controller.UserFileHandler;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -53,7 +53,7 @@ public class Admin extends User {
 					System.out.println("Returning to menu...\n");
 					break;
 				case "5":
-					ArrayList<User> users = fileController.getAllUsers();
+					ArrayList<User> users = UserFileHandler.getAllUsers();
 					printUserList(users);
 					System.out.print("Enter any keys to return to menu: ");
 					scanner.nextLine();
@@ -103,12 +103,12 @@ public class Admin extends User {
 			}
 		} while (!checkValidPassword(password));
 
-		fileController.addUser(email, name, role, password);
+		UserFileHandler.addUser(email, name, role, password);
 		System.out.println("User added successfully.");
 	}
 
 	private void handleDeleteUser(Scanner scanner) {
-        ArrayList<User> users = fileController.getAllUsers();
+        ArrayList<User> users = UserFileHandler.getAllUsers();
         if (users.isEmpty()) {
             System.out.println("No users available.");
             return;
@@ -134,12 +134,12 @@ public class Admin extends User {
             break;
         }
 
-        fileController.deleteUserByEmail(email);
+        UserFileHandler.deleteUserByEmail(email);
         System.out.println("Successfully deleted.");
     }
 
 	private void handleEditUser(Scanner scanner) {
-        ArrayList<User> users = fileController.getAllUsers();
+        ArrayList<User> users = UserFileHandler.getAllUsers();
         if (users.isEmpty()) {
             System.out.println("No users available.");
             return;
@@ -211,7 +211,7 @@ public class Admin extends User {
             if (!checkValidName(name)) System.out.println("Invalid name. Try again!");
         } while (!checkValidName(name));
 
-        fileController.updateUser(email, "name", name);
+        UserFileHandler.updateUser(email, "name", name);
         System.out.println("Username updated successfully to: " + name);
     }
 
@@ -223,7 +223,7 @@ public class Admin extends User {
             if (!checkValidRole(role)) System.out.println("Invalid role. Try again!");
         } while (!checkValidRole(role));
 
-        fileController.updateUser(email, "role", role);
+        UserFileHandler.updateUser(email, "role", role);
         System.out.println("Role updated successfully to: " + role);
     }
 
@@ -237,7 +237,7 @@ public class Admin extends User {
             }
         } while (!checkValidEmail(newEmail) || isEmailExist(newEmail, "add"));
 
-        fileController.updateUser(email, "email", newEmail);
+        UserFileHandler.updateUser(email, "email", newEmail);
         System.out.println("Email updated successfully to: " + newEmail);
     }
 
@@ -249,7 +249,7 @@ public class Admin extends User {
             if (!checkValidPassword(password)) System.out.println("Invalid password. Try again!");
         } while (!checkValidPassword(password));
 
-        fileController.updateUser(email, "password", password);
+        UserFileHandler.updateUser(email, "password", password);
         System.out.println("Password updated successfully.");
 	}
 
@@ -289,7 +289,7 @@ public class Admin extends User {
     }
 	
 	public static boolean isEmailExist(String email, String type) {
-	    ArrayList<User> users = fileController.getAllUsers();  
+	    ArrayList<User> users = UserFileHandler.getAllUsers();  
 	    for (User user: users) {
 	        if (user.getEmail().equalsIgnoreCase(email)) {
 	        	if(type.equals("add")) {
