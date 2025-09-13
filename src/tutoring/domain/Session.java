@@ -10,26 +10,16 @@ public class Session {
 	private int maxPerson;
 	private String venue;
 	
-	public Session(int sessionID,String courseName,String date,String startTime,int duration,int occupiedCapacity,int maxPerson,String venue) {
-		this.sessionID = sessionID;
-		this.courseName = courseName;
-		this.date = date;
-		this.startTime = startTime;
-		this.duration = duration;
-		this.occupiedCapacity = occupiedCapacity;
-		this.maxPerson = maxPerson;
-		this.venue = venue;
-	}
-	
-	public Session(String sessionID,String courseName,String date,String startTime,String duration,String occupiedCapacity,String maxPerson,String venue) {
-		this.sessionID = Integer.parseInt(sessionID);
-		this.courseName = courseName;
-		this.date = date;
-		this.startTime = startTime;
-		this.duration = Integer.parseInt(duration);
-		this.occupiedCapacity = Integer.parseInt(occupiedCapacity);
-		this.maxPerson = Integer.parseInt(maxPerson);
-		this.venue = venue;
+	public Session(int sessionID, String courseName, String date, String startTime, 
+		int duration, int occupiedCapacity, int maxPerson, String venue) {
+			this.sessionID = sessionID;
+			this.courseName = courseName;
+			this.date = date;
+			this.startTime = startTime;
+			this.duration = duration;
+			this.occupiedCapacity = occupiedCapacity;
+			this.maxPerson = maxPerson;
+			this.venue = venue;
 	}
 	
 	// Getters

@@ -150,7 +150,7 @@ public class SessionFileHandler {
 	    }
 	    int newCourseId = newId + 1;
 		
-		sessions.add(new Session(newCourseId,courseName, date, startTime, duration, occupiedCapacity, maxPerson, venue));
+		sessions.add(new Session(newCourseId, courseName, date, startTime, duration, occupiedCapacity, maxPerson, venue));
 		saveSessionsToFile(sessions);
 	}
 	
